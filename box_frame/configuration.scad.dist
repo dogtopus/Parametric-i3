@@ -127,6 +127,23 @@ board_thickness = 12;
 // Segments of small holes. some people claim that a low value makes them easier to print.
 small_hole_segments=7;
 
+// Heat set inserts (HSI) parameters ******************************************
+
+// Defines parameters for holes for HSIs. Currently used by T8 lead screw configuration.
+
+// Diameter of the hole. Should be slightly smaller than the outer diameter of HSI.
+hsi_d_min = 4.0;
+// Depth of the hole. 1.5x of the total length of HSI should be good.
+hsi_depth = 3.6*1.5;
+
+// Taper settings
+// Set these to -1 to make a taperless hole for HSI.
+
+// Diameter of the taper
+hsi_d_taper = 4.2;
+// Depth of the taper
+hsi_depth_taper = 1.0;
+
 // functions
 include <inc/functions.scad>;
 include <inc/settings.scad>;

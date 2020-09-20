@@ -123,14 +123,15 @@ module nema17(places=[1,1,1,1], size=15.5, h=10, holes=false, shadow=false, $fn=
     }
 }
 
+t8_nut_m3_offset = 8;
+
 module t8_nut(thread_length=10.0, base_thickness=3.5, thread_zoffset=-1.5, flip=false, $fn=24) {
     _t8_hole = 8.4;
     module _base2d() {
-        _m3_offset = 8;
         difference() {
             circle(d=22);
             for (rot=[0:90:270]) {
-                translate(y2c([_m3_offset, rot])) circle(d=3.4);
+                translate(y2c([t8_nut_m3_offset, rot])) circle(d=3.4);
             }
             circle(d=_t8_hole);
         }
@@ -209,10 +210,18 @@ module belt(len, side = 0){
     }
 }
 
-
 module maketeeth(len){
     //Belt teeth. 
     for (i = [0 : len / belt_tooth_distance]) {
         translate([0, 0, i * belt_tooth_distance]) cube([2, 9, belt_tooth_distance * belt_tooth_ratio], center = true);
+    }
+}
+
+module hsi(d_min, depth, d_taper=-1, depth_taper=-1) {
+    translate([0, 0, -depth]) cylinder(d=d_min, h=depth);
+    if (d_taper > 0 && depth_taper > 0) {
+        translate([0, 0, -depth_taper]) cylinder(d1=d_min, d2=d_taper, h=depth_taper);
+    } else if (d_taper > 0 || depth_taper > 0) {
+        echo("hsi: Ignoring invalid taper parameter.");
     }
 }

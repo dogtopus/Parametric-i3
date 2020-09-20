@@ -75,7 +75,11 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
                 //rotate([0, 0, 0]) translate([0, -9.5, 0]) 
                 translate([z_delta, 0, 0]) render(convexity = 5) linear(bushing_z, bearing_height);
                 // Nut trap
-                translate([-2, 18, 5]) cube_fillet([20, 14, 10], center = true, vertical=[8, 0, 0, 5]);
+                if (lead_screw_type == "m5") {
+                    translate([-2, 18, 5]) cube_fillet([20, 14, 10], center = true, vertical=[8, 0, 0, 5]);
+                } else if (lead_screw_type == "t8") {
+                    translate([0, 17, 0]) cylinder(d=22, h=10);
+                }
                 //}
             }
         }
@@ -107,11 +111,15 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
                             cylinder(r=4.6, h=14.1, center = true, $fn=6);
                     }
                 } else if (lead_screw_type == "t8") {
-                    rotate([0, 0, 45]) translate([0, 0, -1]) {
+                    translate([0, 0, -1]) {
                         //lead screw hole
                         cylinder(h=10, d=11, $fn=32);
+                        // HSIs for lead screw nuts
+                        for (theta=[45:90:45+270]) {
+                            rotate([0, 180, 0]) translate(y2c([t8_nut_m3_offset, theta, 0])) #hsi(hsi_d_min, hsi_depth, hsi_d_taper, hsi_depth_taper);
+                        }
                         //nut
-                        translate([0, 0, -3.5]) %t8_nut();
+                        rotate([0, 0, 45]) translate([0, 0, -3.5]) %t8_nut();
                     }
                 }
 
