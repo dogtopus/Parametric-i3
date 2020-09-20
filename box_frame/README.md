@@ -1,7 +1,11 @@
-# This is Prusa iteration 3
+# This is (parametric) Prusa iteration 3
+
 Published under GPL v3
 
+**WARNING**: Under construction and not ready for production. Proceed with caution.
+
 ## To start:
+
 Copy configuration.scad.dist to configuration.scad and fill custom settings section there
 
 Print calibarion part form extras and check that:
