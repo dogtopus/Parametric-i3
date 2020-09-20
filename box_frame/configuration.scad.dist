@@ -67,6 +67,10 @@ bushing_z = conf_b_lm8uu;
 // by default use same as xy
 bushing_carriage = bushing_xy;
 
+// Lead screw type ************************************************************
+// m*: Use metric threaded rod as the lead screws (currently only M5 is supported)
+// t8: Use t8 lead screw
+lead_screw_type = "m5"; // ["m5", "t8"]
 
 // Select idler bearing size **************************************************
 // bearing_* are in inc/conf_bushing.scad
