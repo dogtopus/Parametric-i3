@@ -95,18 +95,35 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
                 translate([0, -7, xaxis_rod_distance+6]) rotate([-90, 0, 0]) pushfit_rod(bushing_xy[0] * 2 + 0.2, 50);
             }
         }
-        translate([0, 0, 5 - bushing_xy[0]]) {  // m5 nut insert
-            translate([0, 17, 0]) rotate([0, 0, 10]){
-                //rod
-                translate([0, 0, -1]) cylinder(h=(4.1 / 2 + 5), r=3, $fn=32);
-                //nut
-                translate([0, 0, 9]) cylinder(r=4.6, h=14.1, center = true, $fn=6);
+        translate([0, 0, 5 - bushing_xy[0]]) {  // lead screw nut
+            translate([0, 17, 0]) {
+                if (lead_screw_type == "m5") {
+                    rotate([0, 0, 10]) {
+                        //lead screw hole
+                        translate([0, 0, -1])
+                            cylinder(h=(4.1 / 2 + 5), r=3, $fn=32);
+                        //nut
+                        translate([0, 0, 9])
+                            cylinder(r=4.6, h=14.1, center = true, $fn=6);
+                    }
+                } else if (lead_screw_type == "t8") {
+                    rotate([0, 0, 45]) translate([0, 0, -1]) {
+                        //lead screw hole
+                        cylinder(h=10, d=11, $fn=32);
+                        //nut
+                        translate([0, 0, -3.5]) %t8_nut();
+                    }
+                }
 
             }
         }
     }
-    //lead screw
-    translate([0, 17, 0]) %cylinder(h = 70, r=2.5+0.2);
+    //lead screw reference
+    if (lead_screw_type == "m5") {
+        translate([0, 17, 0]) %cylinder(h = 70, r=2.5+0.2);
+    } else if (lead_screw_type == "t8") {
+        translate([0, 17, 0]) %cylinder(h = 70, r=4+0.2);
+    }
 }
 
 module x_end_idler(thru){

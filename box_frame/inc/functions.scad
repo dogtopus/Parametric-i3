@@ -7,6 +7,17 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/josefprusa/Prusa3
 
+function c2y(vec3) = [
+    sqrt(pow(vec3.x, 2) + pow(vec3.y, 2)),
+    atan2(vec3.y, vec3.x),
+    (vec3.z ? vec3.z : 0)
+];
+
+function y2c(vec3) = [
+    vec3.x * cos(vec3.y),
+    vec3.x * sin(vec3.y),
+    (vec3.z ? vec3.z : 0)
+];
 
 module nut(d,h,horizontal=true){
     cornerdiameter =  (d / 2) / cos (180 / 6);
@@ -33,7 +44,7 @@ module fillet(radius, height=100, $fn=0) {
 
 module cube_fillet(size, radius=-1, vertical=[3,3,3,3], top=[0,0,0,0], bottom=[0,0,0,0], center=false, $fn=0){
     //
-    if (use_fillets == 1) {
+    if (fillet_strategy == "regular") {
         if (center) {
             cube_fillet_inside(size, radius, vertical, top, bottom, $fn);
         } else {
@@ -41,7 +52,7 @@ module cube_fillet(size, radius=-1, vertical=[3,3,3,3], top=[0,0,0,0], bottom=[0
                 cube_fillet_inside(size, radius, vertical, top, bottom, $fn);
         }
     } else {
-        if (use_fillets == 2) {
+        if (fillet_strategy == "chamfer") {
             if (center) {
                 cube_fillet_inside(size, radius, vertical, top, bottom, 4);
             } else {
@@ -109,6 +120,39 @@ module nema17(places=[1,1,1,1], size=15.5, h=10, holes=false, shadow=false, $fn=
         %translate ([0, 0, shadow+21+3-21-1]) cylinder(r=11,h=2, center = true, $fn=20);
     //shaft
         %translate ([0, 0, shadow+21+3-21-7]) cylinder(r=2.5,h=14, center = true);
+    }
+}
+
+module t8_nut(thread_length=10.0, base_thickness=3.5, thread_zoffset=-1.5, flip=false, $fn=24) {
+    _t8_hole = 8.4;
+    module _base2d() {
+        _m3_offset = 8;
+        difference() {
+            circle(d=22);
+            for (rot=[0:90:270]) {
+                translate(y2c([_m3_offset, rot])) circle(d=3.4);
+            }
+            circle(d=_t8_hole);
+        }
+    }
+    module _thread2d() {
+        difference() {
+            circle(d=10.2);
+            circle(d=_t8_hole);
+        }
+    }
+
+    if (flip) {
+        translate([0, 0, -thread_length - thread_zoffset]) linear_extrude(thread_length) {
+            _thread2d();
+        }
+    } else {
+        translate([0, 0, thread_zoffset]) linear_extrude(thread_length) {
+            _thread2d();
+        }
+    }
+    linear_extrude(base_thickness) {
+        _base2d();
     }
 }
 
