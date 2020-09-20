@@ -93,11 +93,11 @@ carriage_l_base = 50;
 use_fillets = 1;
 
 // set to 0 for single plate (affects z axis and screws that attach RP parts to frame)
-i_am_box = 0;
+use_box_frame = 0;
 
 // if you do your own plate and can move bottom Z screws 5mm up set this to 0 to
-// get stronger motor mount. Only for i_am_box = 0
-i_want_to_use_single_plate_dxf_and_make_my_z_weaker = 1;
+// get stronger motor mount. Only for use_box_frame = 0
+stronger_z_bottom = 1;
 
 
 // Radius of long threaded rod on Y frame
@@ -114,7 +114,7 @@ y_threaded_rod_long_r = 5.4;
 // in y-axis-corner it governs the height of the corners by adjusting the
 // distance between ground and M10 threaded rod. (both box and single plate)
 
-// For box model, the parts that hold Z smooth rod have one hole from front
+// For box model, the parts that hold Z shaft have one hole from front
 // and one from side, and this setting makes sure that the screw from side
 // is in the center of the plank.
 
@@ -133,6 +133,6 @@ include <inc/settings.scad>;
 // These constants define the geometry of the doc/complete-printer.scad
 bed_x_size=225;
 bed_y_size=225;
-x_smooth_rod_length=380+board_thickness*2;
-y_smooth_rod_length=400;
-z_smooth_rod_length=320;
+x_shaft_length=380+board_thickness*2;
+y_shaft_length=400;
+z_shaft_length=320;

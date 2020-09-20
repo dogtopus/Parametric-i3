@@ -24,7 +24,7 @@ module nutwasher(){
 }
 
 // y motor mount
-translate([56-yrodseparation/2,-y_smooth_rod_length/2+9,0]) 
+translate([56-yrodseparation/2,-y_shaft_length/2+9,0]) 
 {
 	rotate([0,90,0]) rotate([0,0,90]) motorholder();
 	translate([10,0,30])rotate([0,90,0])nutwasher();
@@ -34,7 +34,7 @@ translate([56-yrodseparation/2,-y_smooth_rod_length/2+9,0])
 }
 
 // y idler mount
-translate([70-yrodseparation/2,y_smooth_rod_length/2-9,30]) 
+translate([70-yrodseparation/2,y_shaft_length/2-9,30]) 
 {
 	translate([0,0-33,-8]) 
 	rotate([0,-90,0]) idlermount();
@@ -71,10 +71,10 @@ module yfront()
 %	translate([yrodseparation+11,9,30])rotate([0,90,0])nutwasher();
 }
 
-translate([-yrodseparation/2,-y_smooth_rod_length/2])
+translate([-yrodseparation/2,-y_shaft_length/2])
 {
 yfront();
-translate([0,y_smooth_rod_length,0]) 
+translate([0,y_shaft_length,0]) 
 mirror([0,1,0])
 yfront();
 }
@@ -85,7 +85,7 @@ module yside()
 	{
 	// left top rod
 	color("MediumBlue")
-	translate([0,0,45]) rotate([0,90,90]) cylinder(h = y_smooth_rod_length, r=4,center=true);
+	translate([0,0,45]) rotate([0,90,90]) cylinder(h = y_shaft_length, r=4,center=true);
 	//left bottom rod
 	color("Aqua")
 	translate([0,0,20]) rotate([0,90,90]) cylinder(h = 430, r=4,center=true);
@@ -94,11 +94,11 @@ module yside()
 	translate([0,board_thickness,20])rotate([0,90,90])nutwasher();
 
 	// back nuts
-	translate([0,y_smooth_rod_length/2+2,20])rotate([0,90,90])nutwasher();
-	translate([0,y_smooth_rod_length/2+2-22,20])rotate([0,90,-90])nutwasher();
+	translate([0,y_shaft_length/2+2,20])rotate([0,90,90])nutwasher();
+	translate([0,y_shaft_length/2+2-22,20])rotate([0,90,-90])nutwasher();
 	// front nuts
-	translate([0,-y_smooth_rod_length/2-2,20])rotate([0,90,-90])nutwasher();
-	translate([0,-y_smooth_rod_length/2-2+22,20])rotate([0,90,90])nutwasher();
+	translate([0,-y_shaft_length/2-2,20])rotate([0,90,-90])nutwasher();
+	translate([0,-y_shaft_length/2-2+22,20])rotate([0,90,90])nutwasher();
 	}
 }
 
@@ -146,7 +146,7 @@ zrodholder();
 module z_rods()
 {
 	color("MediumBlue")
-	translate([board_w/2-4,-26,42])cylinder(h=z_smooth_rod_length,r=4);
+	translate([board_w/2-4,-26,42])cylinder(h=z_shaft_length,r=4);
 }
 
 z_rods();

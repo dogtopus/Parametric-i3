@@ -103,7 +103,7 @@ module nema17(places=[1,1,1,1], size=15.5, h=10, holes=false, shadow=false, $fn=
             }
         }
     }
-    if (shadow != false) {
+    if (shadow) {
         %translate ([0, 0, shadow+21+3]) cube([42,42,42], center = true);
     //flange
         %translate ([0, 0, shadow+21+3-21-1]) cylinder(r=11,h=2, center = true, $fn=20);
@@ -112,7 +112,7 @@ module nema17(places=[1,1,1,1], size=15.5, h=10, holes=false, shadow=false, $fn=
     }
 }
 
-module screw(h=20, r=2, r_head=3.5, head_drop=0, slant=i_am_box, poly=false, $fn=0){
+module screw(h=20, r=2, r_head=3.5, head_drop=0, slant=use_box_frame, poly=false, $fn=0){
     //makes screw with head
     //for substraction as screw hole
     if (poly) {
@@ -130,7 +130,7 @@ module screw(h=20, r=2, r_head=3.5, head_drop=0, slant=i_am_box, poly=false, $fn
 }
 
 module plate_screw(long=0) {
-    if (i_am_box == 0) {
+    if (!use_box_frame) {
         translate([0, 0, -long]) screw(head_drop=14 + long, h=30 + long, r_head=3.6, r=1.7, $fn=24, slant=false);
     } else {
         translate([0, 0, -2 - long]) screw(head_drop=14 + long, h=30 + long, r_head=4.5, r=2, $fn=24, slant=true);

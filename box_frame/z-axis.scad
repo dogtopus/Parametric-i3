@@ -21,13 +21,13 @@
  
 include <configuration.scad>
 
-module zmotorholder(thickness=(i_am_box == 0 ? 38 : 23), bottom_thickness=5){
+module zmotorholder(thickness=((!use_box_frame) ? 38 : 23), bottom_thickness=5){
     difference(){
         union(){
             // Motor holding part
             difference(){
                 union(){
-                    zrodholder(thickness=thickness, xlen=45, ylen=44, zdelta=((i_want_to_use_single_plate_dxf_and_make_my_z_weaker == 0) ? 0 : 5));
+                    zrodholder(thickness=thickness, xlen=45, ylen=44, zdelta=(((!stronger_z_bottom)) ? 0 : 5));
                     translate([board_to_xz_distance, board_to_xz_distance, 0]) {
                         nema17(places=[0, 1, 1, 1], h=bottom_thickness + layer_height, $fn=23, shadow=layer_height + 2);
                     }
@@ -45,7 +45,7 @@ module zmotorholder(thickness=(i_am_box == 0 ? 38 : 23), bottom_thickness=5){
 }
 
 
-module zrodholder(thickness=(i_am_box == 0 ? 14 : 15), bottom_thickness=5, ylen=44, xlen=34, zdelta=0){
+module zrodholder(thickness=((!use_box_frame) ? 14 : 15), bottom_thickness=5, ylen=44, xlen=34, zdelta=0){
     holder_inner_r = 9;
     holder_inner_r2 = 2;
     difference(){
@@ -73,25 +73,25 @@ module zrodholder(thickness=(i_am_box == 0 ? 14 : 15), bottom_thickness=5, ylen=
                         }
                     }
                     //piece along cut side of the board
-                    if (i_am_box == 1) {
+                    if (use_box_frame) {
                         translate([-board_thickness, 0, 0])
                             cube_fillet([board_thickness + board_to_xz_distance + bushing_z[0], 5, thickness], radius=2, top = [0, 0, 0, thickness], $fn=99);
                     } else {
                         translate([-board_thickness/2, 0, 0])
                             cube_fillet([board_thickness/2 + board_to_xz_distance + bushing_z[0], 5, thickness], radius=2, top = [0, 0, 0, thickness], $fn=99);
                     }
-                    //smooth rod insert
+                    //shaft insert
                     translate([board_to_xz_distance - z_delta, 9, 0])
                         cylinder(h=bottom_thickness / 2, r=(bushing_z[0] + 5 * single_wall_width));
                 }
-                //smooth rod hole
+                //shaft hole
                 translate([board_to_xz_distance - z_delta, 9, -1]) cylinder(h=board_thickness+20, r=bushing_z[0] + single_wall_width / 4);
                 //inside rouned corner
                 translate([0, 5, -1]) cylinder(r=0.8, h=100, $fn=8);
                 //side screw
                 //translate([-board_thickness/2, 0, thickness/2-1.5]) rotate([-90, 0, 0]) screw(h=30, r_head=4);
                 //front screws
-                if (i_am_box != 1) {
+                if (use_box_frame != 1) {
                     //single plate has both screws on front
                     translate([16, 35, bottom_thickness + 4.5 + zdelta]) rotate([0, -90, 0]) {
                         plate_screw();

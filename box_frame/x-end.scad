@@ -24,7 +24,7 @@ use <bushing.scad>
 use <inc/bearing-guide.scad>
 use <y-drivetrain.scad>
 
-//height and width of the x blocks depend on x smooth rod radius
+//height and width of the x blocks depend on x shaft radius
 x_box_height = 52 + 2 * bushing_xy[0];
 x_box_width = (bushing_xy[0] <= 4) ? 17.5 : bushing_xy[0] * 2 + 9.5;
 bearing_height = max ((bushing_z[2] > 30 ? x_box_height : (2 * bushing_z[2] + 8)), x_box_height);
@@ -34,7 +34,6 @@ module x_end_motor(){
     mirror([0, 1, 0]) {
 
         x_end_base([3, 3, min((bushing_xy[0] - 3) * 2, 3), 2], len=42, offset=-5, thru=false);
-
 
         translate([0, -z_delta - 2, 0]) difference(){
             union(){
@@ -55,12 +54,12 @@ module x_end_motor(){
             // motor screw holes
             translate([21-5, -21-11, 30.25]){
                 // belt hole
-                    translate([-30, 11, -0.25]) cube_fillet([11, 36, 22], vertical=0, top=[0, 1, 0, 1], bottom=[0, 1, 0, 1], center = true, $fn=4);
+                    translate([-30, 11, -0.25]) cube_fillet([11, 36, 22], vertical=[0, 0, 0, 0], top=[0, 1, 0, 1], bottom=[0, 1, 0, 1], center = true, $fn=4);
                 //motor mounting holes
                 translate([-29.5, 0, 0]) rotate([0, 0, 0])  rotate([0, 90, 0]) nema17(places=[1, 1, 0, 1], holes=true, shadow=5.5, $fn=small_hole_segments, h=8);
             }
         }
-        //smooth rod caps
+        //shaft caps
         //translate([-22, -10, 0]) cube([17, 2, 15]);
         //translate([-22, -10, 45]) cube([17, 2, 10]);
     }
@@ -84,9 +83,9 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
         translate([z_delta, 0, 4 - bushing_xy[0]]) linear_negative(bushing_z, bearing_height);
 
         // belt hole
-        translate([-14 - xy_delta / 2, 22 - 9 + offset, 30]) cube_fillet([max(idler_width + 2, 11), 55, 27], center = true, vertical=0, top=[0, 1, 0, 1], bottom=[0, 1, 0, 1], $fn=4);
+        translate([-14 - xy_delta / 2, 22 - 9 + offset, 30]) cube_fillet([max(idler_width + 2, 11), 55, 27], center = true, vertical=[0, 0, 0, 0], top=[0, 1, 0, 1], bottom=[0, 1, 0, 1], $fn=4);
 
-        //smooth rods
+        //shafts
         translate([-10 - bushing_xy[0], offset, 0]) {
             if(thru == true){
                 translate([0, -11, 6]) rotate([-90, 0, 0]) pushfit_rod(bushing_xy[0] * 2 + 0.2, 50);
@@ -106,11 +105,11 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
             }
         }
     }
-    //threaded rod
+    //lead screw
     translate([0, 17, 0]) %cylinder(h = 70, r=2.5+0.2);
 }
 
-module x_end_idler(){
+module x_end_idler(thru){
     difference() {
         x_end_base(len=48 + z_delta / 3, offset=-10 - z_delta / 3);
         // idler hole

@@ -24,7 +24,7 @@ function bushing_foot_len(conf_b, h=10.5, add=4*single_wall_width) = ((conf_b[1]
 function bushing_outer_radius(conf_b) = conf_b[1] + 4*single_wall_width;
 
 // basic building blocks, housings for 1 bushing/bearing
-// at [0,0] there is center of the smooth rod, pointing in Z
+// at [0,0] there is center of the shaft, pointing in Z
 
 module linear_bushing_negative_single(conf_b=bushing_xy, h=0){
     // barrel with the dimensions of a bushing/bearing
@@ -48,7 +48,7 @@ module linear_bushing_single(conf_b=bushing_xy, h=0) {
 }
 
 module linear_bushing_negative(conf_b=bushing_xy, h=0){
-    // return simple negative stretched all along and a smooth rod
+    // return simple negative stretched all along and a shaft
     translate([0,0,-0.1]) cylinder(r = conf_b[0] + single_wall_width, h=adjust_bushing_len(conf_b, h)+0.2);
     linear_bushing_negative_single(conf_b, h=adjust_bushing_len(conf_b, h));
 }
@@ -205,7 +205,7 @@ module linear(conf_b = bushing_xy, h = 0){
     %linear_negative(conf_b, h, true);
 }
 
-if (i_am_box == 1) {
+if (use_box_frame) {
     %cylinder(r=bushing_xy[0], h=90);
 
     y_bearing();

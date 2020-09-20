@@ -73,7 +73,7 @@ bushing_carriage = bushing_xy;
 
 idler_bearing = bearing_623;
 
-// Select carriage lenght ******************************************************
+// Select carriage length ******************************************************
 // 30 for single carriage extruder (two holes with centers 30mm apart)
 // 50 for wade or single with fan (three holes, 30-20)
 // 80 for full length carriage (four holes, 30-20-30)
@@ -92,12 +92,11 @@ carriage_l_base = 50;
 
 use_fillets = 1;
 
-// set to 0 for single plate (affects z axis and screws that attach RP parts to frame)
-i_am_box = 0;
+// set to true for single plate (affects z axis and screws that attach RP parts to frame)
+use_box_frame = false;
 
-// if you do your own plate and can move bottom Z screws 5mm up set this to 0 to
-// get stronger motor mount. Only for i_am_box = 0
-i_want_to_use_single_plate_dxf_and_make_my_z_weaker = 1;
+// Set this to true to increase the rigidity of z axis bottom. Only applicable to single plate frame.
+stronger_z_bottom = true;
 
 
 // Radius of long threaded rod on Y frame
@@ -114,7 +113,7 @@ y_threaded_rod_long_r = 5.4;
 // in y-axis-corner it governs the height of the corners by adjusting the
 // distance between ground and M10 threaded rod. (both box and single plate)
 
-// For box model, the parts that hold Z smooth rod have one hole from front
+// For box model, the parts that hold Z shaft have one hole from front
 // and one from side, and this setting makes sure that the screw from side
 // is in the center of the plank.
 
@@ -123,7 +122,7 @@ y_threaded_rod_long_r = 5.4;
 // (extras/bearing-holder-single-plate-y)
 board_thickness = 12;
 
-// Segments of small holes. some poeple claim that a low value makes them easier to print.
+// Segments of small holes. some people claim that a low value makes them easier to print.
 small_hole_segments=7;
 
 // functions
@@ -133,6 +132,8 @@ include <inc/settings.scad>;
 // These constants define the geometry of the doc/complete-printer.scad
 bed_x_size=225;
 bed_y_size=225;
-x_smooth_rod_length=380+board_thickness*2;
-y_smooth_rod_length=400;
-z_smooth_rod_length=320;
+x_shaft_length=380+board_thickness*2;
+y_shaft_length=400;
+z_shaft_length=320;
+
+//board_to_xz_distance=1;

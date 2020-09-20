@@ -16,15 +16,15 @@
 include <configuration.scad>
 
 module y_belt_holder(len=40) {
-    y_delta = i_am_box == 0 ? -2.5 : xy_delta;
+    y_delta = (!use_box_frame) ? -2.5 : xy_delta;
     ybelt_hole_to_side = 5;
     real_len = len + 2 * ybelt_hole_to_side;
-    screw_hole_z_offset = i_am_box == 0 ? 0 : 4;
+    screw_hole_z_offset = (!use_box_frame) ? 0 : 4;
     
     difference(){
         union(){
 
-            translate([-21 - belt_thickness, -7, 0]) cube_fillet([13 + y_delta, 14, len], vertical=[3,0,0,0], fn=8 );
+            translate([-21 - belt_thickness, -7, 0]) cube_fillet([13 + y_delta, 14, len], vertical=[3,0,0,0], $fn=8 );
             translate([-14, -5.5, len / 2]) cube_fillet([24 + 2 * y_delta, 3, len], vertical=[3, 0, 0, 0], center = true);
             translate([-24.5, 0, real_len / 2]) cube_fillet([11.5, 16, real_len], center = true, vertical = [1, 1, 1, 1], $fn=16);
             translate([-4.0 + y_delta, 0, len / 2]) cube_fillet([8, 14, len], center = true, vertical = [2,2,0,2]);

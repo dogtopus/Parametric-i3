@@ -7,6 +7,8 @@
 
 include <../configuration.scad>
 
+m2_diameter = 2.4;
+
 /**
  * This endstop adapter has 3 holes for endstops with either 10mm or 20mm spacing.
  * It is designed to fit on the original endstop-holder to rotate a mechanical endstop 90 degrees.

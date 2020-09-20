@@ -93,7 +93,7 @@ module nutwasher(){
 // Y axis
 //--------------------------------------------------------------------------------------------------------------------------------
 // y motor mount
-translate([56-yrodseparation/2,-y_smooth_rod_length/2+9,board_thickness-12]) 
+translate([56-yrodseparation/2,-y_shaft_length/2+9,board_thickness-12]) 
 {
 	rotate([0,90,0]) rotate([0,0,90]) motorholder();
 	translate([10,0,30])rotate([0,90,0])nutwasher();
@@ -103,7 +103,7 @@ translate([56-yrodseparation/2,-y_smooth_rod_length/2+9,board_thickness-12])
 }
 
 // y idler mount
-translate([70-yrodseparation/2,y_smooth_rod_length/2-9,30 + board_thickness-12]) 
+translate([70-yrodseparation/2,y_shaft_length/2-9,30 + board_thickness-12]) 
 {
 	translate([0,0-33,-8]) 
 		rotate([0,-90,0]) idlermount();
@@ -143,10 +143,10 @@ module yfront()
 	translate([yrodseparation+11,9,30])rotate([0,90,0])nutwasher();
 }
 
-translate([-yrodseparation/2,-y_smooth_rod_length/2,board_thickness-12])
+translate([-yrodseparation/2,-y_shaft_length/2,board_thickness-12])
 {
 	yfront();
-	translate([0,y_smooth_rod_length,0]) 
+	translate([0,y_shaft_length,0]) 
 		mirror([0,1,0])
 		yfront();
 }
@@ -157,10 +157,10 @@ module yside()
 	{
 	// left top rod
 	color("MediumBlue")
-	translate([0,0,3+board_thickness + 30]) rotate([0,90,90]) cylinder(h = y_smooth_rod_length, r=bushing_xy[0],center=true);
+	translate([0,0,3+board_thickness + 30]) rotate([0,90,90]) cylinder(h = y_shaft_length, r=bushing_xy[0],center=true);
 	//left bottom rod
 	color("Aqua")
-	translate([0,0,3+board_thickness+4+1]) rotate([0,90,90]) cylinder(h =  y_smooth_rod_length+22, r=y_threaded_rod_long_r ,center=true);
+	translate([0,0,3+board_thickness+4+1]) rotate([0,90,90]) cylinder(h =  y_shaft_length+22, r=y_threaded_rod_long_r ,center=true);
 
 
 	// middle nuts
@@ -171,11 +171,11 @@ module yside()
 
 
 	// back nuts
-	translate([0,y_smooth_rod_length/2+2,8+board_thickness])rotate([0,90,90])nutwasher();
-	translate([0,y_smooth_rod_length/2+2-22,8+board_thickness])rotate([0,90,-90])nutwasher();
+	translate([0,y_shaft_length/2+2,8+board_thickness])rotate([0,90,90])nutwasher();
+	translate([0,y_shaft_length/2+2-22,8+board_thickness])rotate([0,90,-90])nutwasher();
 	// front nuts
-	translate([0,-y_smooth_rod_length/2-2,8+board_thickness])rotate([0,90,-90])nutwasher();
-	translate([0,-y_smooth_rod_length/2-2+22,8+board_thickness])rotate([0,90,90])nutwasher();
+	translate([0,-y_shaft_length/2-2,8+board_thickness])rotate([0,90,-90])nutwasher();
+	translate([0,-y_shaft_length/2-2+22,8+board_thickness])rotate([0,90,90])nutwasher();
 	}
 }
 
@@ -311,8 +311,8 @@ screw(25);
 module z_rods()
 {
 	color("MediumBlue")
-	translate([board_w/2-4-12+board_thickness,-26+12-board_thickness,42])cylinder(h=z_smooth_rod_length,r=bushing_z[0]);
-    echo (z_smooth_rod_length);
+	translate([board_w/2-4-12+board_thickness,-26+12-board_thickness,42])cylinder(h=z_shaft_length,r=bushing_z[0]);
+    echo (z_shaft_length);
 	color("Aqua")
 	translate([board_w/2-4-12+board_thickness-17,-26+12-board_thickness,56])cylinder(h = 390, r=2.5);
 }
@@ -336,7 +336,7 @@ mirror([1,0,0])z_rods();
 
 // move the x-axis up 20cm (for visualization only)
 x_axis_height=200;
-x_smooth_rod_length=450+board_thickness*2+10;
+x_shaft_length=450+board_thickness*2+10;
 
 // X ends
 translate([-board_w/2+4+12-board_thickness,-26+12-board_thickness, 200+ x_axis_height])
@@ -357,7 +357,7 @@ bearing_guide();
 // X rods
 for(i=[0:1])
 color("MediumBlue")
-translate([1.5,-12+12-board_thickness-28,-3+149+i*45 + x_axis_height])rotate([0,90,0])cylinder(h=x_smooth_rod_length,r=4,center=true);
+translate([1.5,-12+12-board_thickness-28,-3+149+i*45 + x_axis_height])rotate([0,90,0])cylinder(h=x_shaft_length,r=4,center=true);
 
 // X carriage
 translate([0,-12+12-board_thickness-28,-3+149 + x_axis_height])
