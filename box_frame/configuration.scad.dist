@@ -94,7 +94,7 @@ carriage_l_base = 50;
 
 fillet_strategy = "regular"; // ["none", "regular", "chamfer"]
 
-// set to true for single plate (affects z axis and screws that attach RP parts to frame)
+// set to false for single plate (affects z axis and screws that attach RP parts to frame)
 use_box_frame = false;
 
 // Set this to true to increase the rigidity of z axis bottom. Only applicable to single plate frame.

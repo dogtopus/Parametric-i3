@@ -1,3 +1,11 @@
+/* [Features] */
+// Include part cooling fan mount.
+PCF = false;
+
+// Type of automatic bed leveling sensor.
+ABL = "none"; // ["none", "lc_m10"]
+
+/* [Hidden] */
 NEMA17_SIDE_LEN = 42.3 + 0.5;
 NEMA17_CENTER_RADIUS = 11 + 0.4;
 NEMA17_SCREW_HOLE_OFFSET = (NEMA17_SIDE_LEN - 31) / 2;
@@ -6,6 +14,7 @@ STAND_THICKNESS = SPACER_THICKNESS;
 gear_diameter = 34;
 
 include <inc/circumscribed_polygon.scad>;
+include <../inc/functions.scad>;
 
 module nema17_frame(thickness=2) {
     difference() {
@@ -42,33 +51,36 @@ module frame_stand(width, height, thickness=STAND_THICKNESS, frame_thickness=SPA
 
 module titan_aero_mount() {
     height = NEMA17_SIDE_LEN + 2*2;
+    mount_thickness = 10;
+    screw_hole_bottom_thickness = 3;
+    mount_thickness_motor = mount_thickness+4;
     difference() {
         union() {
-            cube([56,height,10]);
-            translate([56-30,0,10]) {
+            cube([56,height,mount_thickness]);
+            translate([56-30,0,mount_thickness]) {
                 cube([30, height, 4]);
             }
         }
         // TODO screw holes
         translate([3, 20, 0]) {
-            cylinder(d=3.9, h=10);
-            translate([0,0,6]) cylinder(d=7.2, h=4);
+            cylinder(d=3.9, h=mount_thickness);
+            translate([0,0,screw_hole_bottom_thickness]) cylinder(d=7.2, h=mount_thickness-screw_hole_bottom_thickness);
         }
         translate([33, 20, 0]) {
-            cylinder(d=3.9, h=14);
-            translate([0,0,6]) cylinder(d=7.2, h=8);
+            cylinder(d=3.9, h=mount_thickness_motor);
+            translate([0,0,screw_hole_bottom_thickness]) cylinder(d=7.2, h=mount_thickness_motor-screw_hole_bottom_thickness);
         }
         translate([53, 20, 0]) {
-            cylinder(d=3.9, h=14);
-            translate([0,0,6]) cylinder(d=7.2, h=8);
+            cylinder(d=3.9, h=mount_thickness_motor);
+            translate([0,0,screw_hole_bottom_thickness]) cylinder(d=7.2, h=mount_thickness_motor-screw_hole_bottom_thickness);
         }
-        translate([56-30-4, NEMA17_SCREW_HOLE_OFFSET+2, NEMA17_SCREW_HOLE_OFFSET + 4+10])
+        translate([56-30-4, NEMA17_SCREW_HOLE_OFFSET+2, NEMA17_SCREW_HOLE_OFFSET + 4+mount_thickness])
             rotate([0, -90, 0])
                 #gear_cut();
     }
-    translate([26, 0, 14]) {
+    translate([26, 0, 4+mount_thickness]) {
         translate([0, NEMA17_SIDE_LEN + STAND_THICKNESS*2, 0]) rotate([90, 0, 0])
-            frame_stand(width=30, height=NEMA17_SIDE_LEN);
+            #frame_stand(width=30, height=NEMA17_SIDE_LEN);
         translate([0, STAND_THICKNESS, 0])rotate([90, 0, 0])
             frame_stand(width=30, height=NEMA17_SIDE_LEN);
         rotate([0, -90, 0]) translate([0, STAND_THICKNESS, -SPACER_THICKNESS]) {
