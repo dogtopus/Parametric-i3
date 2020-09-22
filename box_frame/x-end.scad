@@ -115,8 +115,17 @@ module x_end_base(vfillet=[3, 3, 3, 3], thru=true, len=40, offset=0){
                         //lead screw hole
                         cylinder(h=10, d=11, $fn=32);
                         // HSIs for lead screw nuts
-                        for (theta=[45:90:45+270]) {
-                            rotate([0, 180, 0]) translate(y2c([t8_nut_m3_offset, theta, 0])) #hsi(hsi_d_min, hsi_depth, hsi_d_taper, hsi_depth_taper);
+                        if (bushing_z == conf_b_lm12uu) {
+                            echo("WARNING: Using 12mm z shaft together with T8 lead screw may weaken the mounting for the lead screw nut.");
+                            for (theta=[45, 45+90, 45+270]) {
+                                rotate([0, 180, 0]) translate(y2c([t8_nut_m3_offset, theta, 0]))
+                                    #hsi(hsi_d_min, hsi_depth, hsi_d_taper, hsi_depth_taper);
+                            }
+                        } else {
+                            for (theta=[45:90:45+270]) {
+                                rotate([0, 180, 0]) translate(y2c([t8_nut_m3_offset, theta, 0]))
+                                    #hsi(hsi_d_min, hsi_depth, hsi_d_taper, hsi_depth_taper);
+                            }
                         }
                         //nut
                         rotate([0, 0, 45]) translate([0, 0, -3.5]) %t8_nut();
